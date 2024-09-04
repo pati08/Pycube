@@ -6,7 +6,7 @@ def permutations(max, min=(0, 0), step=1):
       out.append([val1, val2])
   return out
 
-def CreateFaces(size=3, pixelWidth=300, colors="base"):
+def CreateFaces(size=3, pixelWidth=300, colors="base", gap = 0.05):
   """
   size = int for pieces width
 
@@ -290,7 +290,7 @@ def CreateFaces(size=3, pixelWidth=300, colors="base"):
             shapes.append(square)
 
       #creates the stickers
-      stickgap = (pixelWidth * 0.05) / (size)
+      stickgap = (pixelWidth * gap) / (size)
       square = [[[-W + stickgap + xshift, -W + stickgap + yshift],
                  [-W + squarewidth - stickgap + xshift, -W + stickgap + yshift],
                  [-W + squarewidth - stickgap + xshift, -W + squarewidth - stickgap + yshift],
