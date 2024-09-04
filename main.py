@@ -28,7 +28,7 @@ turn_rate = 9
 drag = .97
 # 0<=drag<1. anything outside this ange will cause sillyness
 
-gap = 1.00
+gap = 0.00
 #changes the gap between faces, reccomended 0 to 0.1
 
 #dont changes anything below unless you know what you're doing
