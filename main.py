@@ -9,7 +9,12 @@ from CreateFaces import CreateFaces
 Scroll to zoom
 Hold right click to rotate 
 Left click an button to turn a face
-click r to scramble, causes rapid demateralization, use with caution
+r to scramble
+WASDQE also rotates the cube
+, or . to change the size of the cube
+f to print the framerate to console
+L to enable debug thing that looks kinda cool
+O or P to adjust drag
 """
 
 screen_width, screen_height = (600,600)
@@ -25,7 +30,7 @@ sensitivity = 100.0
 turn_rate = 9
 #changes how many degrees per frame they are turned
 
-drag = .97
+drag = 1.0
 # 0<=drag<1. anything outside this ange will cause sillyness
 
 gap = 0.00
@@ -241,14 +246,17 @@ while running:
   elif pygame.key.get_pressed()[pygame.K_RIGHTBRACKET]: Fov *= 1.005
 
   #allows key rotation
-  if pygame.key.get_pressed()[pygame.K_z]:x_rotation+=20
-  if pygame.key.get_pressed()[pygame.K_x]:y_rotation+=20
-  if pygame.key.get_pressed()[pygame.K_a]:z_rotation+=20
-  if pygame.key.get_pressed()[pygame.K_c]:x_rotation-=20
-  if pygame.key.get_pressed()[pygame.K_s]:y_rotation-=20
-  if pygame.key.get_pressed()[pygame.K_d]:z_rotation-=20
+  if pygame.key.get_pressed()[pygame.K_q]:x_rotation+=20
+  if pygame.key.get_pressed()[pygame.K_s]:y_rotation+=20
+  if pygame.key.get_pressed()[pygame.K_d]:z_rotation+=20
+  if pygame.key.get_pressed()[pygame.K_e]:x_rotation-=20
+  if pygame.key.get_pressed()[pygame.K_w]:y_rotation-=20
+  if pygame.key.get_pressed()[pygame.K_a]:z_rotation-=20
 
-  
+  #allows adjusting drag
+  if pygame.key.get_pressed()[pygame.K_o]:drag *= 1.1
+  if pygame.key.get_pressed()[pygame.K_p]:drag *= 0.9
+
   #allows mouse rotation
   tz, ty = pygame.mouse.get_rel()
   if pygame.mouse.get_pressed()[2]:
@@ -258,10 +266,16 @@ while running:
   [rotation_direction] = RotateShape([rotation_direction], "y", y_rotation / sensitivity)
   [rotation_direction] = RotateShape([rotation_direction], "z", z_rotation / sensitivity)
   [rotation_direction] = RotateShape([rotation_direction], "x", x_rotation / sensitivity)
+
   for face in Faces:
     face[0] = RotateShape(face[0], "y", y_rotation / sensitivity)
     face[0] = RotateShape(face[0], "z", z_rotation / sensitivity)
     face[0] = RotateShape(face[0], "x", x_rotation / sensitivity)
+
+  #slows rotation to create air resistance 
+  z_rotation*=drag
+  y_rotation*=drag
+  x_rotation*=drag
 
   pygame.display.flip()
   screen.fill((4,0,50))
